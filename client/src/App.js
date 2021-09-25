@@ -1,24 +1,30 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect, useState } from "react";
+import TitleHeader from "./TitleHeader";
+import Homepage from "./Homepage";
+
+// COMMANDS THAT NEED TO RUN
+  // npm install --prefix client
+  // npm install semantic-ui-react semantic-ui-css
+  // npm start --prefix client
+  // npm install react-router-dom
 
 function App() {
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    // auto-login
+    fetch("/me").then((resp) => {
+        if (resp.ok) {
+            resp.json().then((user) => setUser(user));
+        }
+    });
+  }, []);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <TitleHeader user={user} />
+      <Homepage user={user} setUser={setUser} />
+    </>
   );
 }
 
