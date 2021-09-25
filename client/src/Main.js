@@ -4,6 +4,8 @@ import Profile from "./Profile";
 import Home from "./Home"
 import TopicContainer from "./TopicContainer"
 import { Switch, Route } from "react-router-dom";
+import { useState, useEffect } from "react";
+
 
 function Main({ user, setUser }) {
   return (

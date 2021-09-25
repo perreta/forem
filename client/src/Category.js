@@ -11,17 +11,18 @@ function Category({ category, user, id, createdDate, updatedDate, createdAt, upd
 
   return (
     <div>
-        <Link to={`/categories/${category.category.toLowerCase()}`}>
-            <h2>{category.category}</h2> 
-        </Link>
-        <p>Last post: {updatedDate}</p>
+            <Route exact path="/categories">
+                <Link to={`/categories/books`}>
+                    <h2>{category.category}</h2> 
+                </Link>
+                <p>Last post: {updatedDate}</p>  
+            </Route>
+            
+            <Route exact path="/categories/books">
+                <h1>Threads</h1>
+                <TopicContainer user={user} category={category} id={id}/>
+            </Route>
 
-
-            <h1>Threads</h1>
-            <TopicContainer user={user} category={category} id={id}/>
-        {/* <Route exact path={`/categories/${category.category.toLowerCase()}`}>
-        </Route> */}
-    
     </div>
   )
 }
