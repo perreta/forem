@@ -1,6 +1,6 @@
 class TopicsController < ApplicationController
     before_action :set_topic, only: [:show, :update, :destroy]
-    skip_before_action :authorize
+    skip_before_action :authorize, only: [:index, :show]
 
     # GET /topics
     def index
@@ -17,16 +17,14 @@ class TopicsController < ApplicationController
     # POST /topics
     def create
         topic = @current_user.topics.create!(topic_params)
-        render json: post, status: :created
+        render json: topic, status: :created
     end
 
     # PATCH/PUT /topics/1
     def update
-        if @topic.update(topic_params)
-            render json: @topic
-        else
-            render json: @topic.errors, status: :unprocessable_entity
-        end
+        topic = set_topic
+        topic.update!(topic_params)
+        render json: topic, status: :accepted
     end
 
     # DELETE /topics/1
@@ -42,6 +40,6 @@ class TopicsController < ApplicationController
 
         # Only allow a list of trusted parameters through.
         def topic_params
-            params.permit(:title, :user_id)
+            params.require(:topic).permit(:title, :user_id, :category_id)
         end
 end

@@ -5,49 +5,47 @@ import { Form, Input, TextArea, Button, Header } from "semantic-ui-react";
 
 
 function Signup({ onLogin }) {
-  const [errors, setErrors] = useState([]);
-  const history = useHistory();
-
-
-  const [userInput, setUserInput] = useState({
-    name: "",
-    username: "",
-    password: "",
-    email: "",
-    profile_picture: "",
-    bio: "",
-  });
-
-  function inputOnChange(e) {
-    const name = e.target.name;
-    const value = e.target.value;
-    console.log(e.target.value)
-    setUserInput({
-      ...userInput, //spreading the userInput
-      [name]: value, //inserting the name and value the user typed in
+    
+    const history = useHistory();
+    const [errors, setErrors] = useState([]);
+    const [userInput, setUserInput] = useState({
+        name: "",
+        username: "",
+        password: "",
+        email: "",
+        profile_picture: "",
+        bio: "",
     });
-    // e.target.reset();
-  }
 
-  function handleSubmit(e) {
-    e.preventDefault();
-    //  console.log("I was clicked")
-    fetch(`/signup`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(userInput),
-    })
-      .then((r) => {
-        if (r.ok) {
-          r.json().then((user) => onLogin(user));
-            history.push("/");
-        } else {
-          r.json().then((err) => setErrors(err.errors));
-        }
-      });
-  }
+    function inputOnChange(e) {
+        const name = e.target.name;
+        const value = e.target.value;
+        console.log(e.target.value)
+        setUserInput({
+            ...userInput, //spreading the userInput
+            [name]: value, //inserting the name and value the user typed in
+        });
+    // e.target.reset();
+    }
+
+    function handleSubmit(e) {
+        e.preventDefault();
+        fetch(`/signup`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(userInput),
+        })
+        .then((r) => {
+            if (r.ok) {
+                r.json().then((user) => onLogin(user));
+                    history.push("/");
+            } else {
+                r.json().then((err) => setErrors(err.errors));
+            }
+        });
+    }
     return (
         <div style={{paddingRight:"300px", paddingLeft:"300px", paddingTop:"100px", paddingBottom:"100px"}}>
             <Header as="h2">Sign Up</Header>
@@ -56,7 +54,7 @@ function Signup({ onLogin }) {
                 <Form.Group  widths='equal' >
                     <Form.Field
                         fluid
-                        id="form-input-control-username"
+                        id="form-input-control-fullname"
                         control={Input}
                         label="Full Name"
                         name="name"
@@ -71,6 +69,16 @@ function Signup({ onLogin }) {
                         label="Username"
                         name="username"
                         placeholder="Username"
+                        autoComplete="off"
+                        onChange={inputOnChange}
+                    />
+                    <Form.Field
+                        fluid
+                        id="form-input-control-email"
+                        control={Input}
+                        label="Email"
+                        name="email"
+                        placeholder="Email"
                         autoComplete="off"
                         onChange={inputOnChange}
                     />

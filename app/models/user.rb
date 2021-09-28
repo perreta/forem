@@ -1,6 +1,7 @@
 class User < ApplicationRecord
     has_many :topics, dependent: :destroy
     has_many :posts, dependent: :destroy
+    has_many :categories, through: :topics
 
     has_secure_password
 

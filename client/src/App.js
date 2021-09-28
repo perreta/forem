@@ -9,17 +9,18 @@ import Homepage from "./Homepage";
   // npm install react-router-dom
 
 function App() {
-  const [user, setUser] = useState(null);
+    
+    const [user, setUser] = useState(null);
 
-  useEffect(() => {
+    useEffect(() => {
     // auto-login
-    fetch("/me")
-    .then((resp) => {
-        if (resp.ok) {
-            resp.json().then((user) => setUser(user));
-        }
-    });
-  }, []);
+        fetch("/me")
+        .then((resp) => {
+            if (resp.ok) {
+                resp.json().then((user) => setUser(user));
+            }
+        });
+    }, []);
 
   return (
     <>

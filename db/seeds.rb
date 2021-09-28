@@ -8,15 +8,15 @@
 require "faker"
 puts "Seeding🌱..."
 
-User.create(name: 'Bart Simpson', username: "bart", email: "aperret@me.com", bio: 'I love to post', profile_picture: "https://i.imgur.com/yqAVjVI.jpg", password: "1234567")
-User.create(name: 'Lisa Simpson', username: "lisa", email: "aperret@me.com", bio: 'I also love to post', profile_picture: "https://i.imgur.com/hBBnyzA.jpg", password: "1234567")
+User.create(name: 'Bart Simpson', username: "bart", email: "aperret@me.com", bio: 'I love to post', profile_picture: "https://i.imgur.com/yqAVjVI.jpg", password: "1234567", admin: true)
+User.create(name: 'Lisa Simpson', username: "lisa", email: "aperret@me.com", bio: 'I also love to post', profile_picture: "https://i.imgur.com/hBBnyzA.jpg", password: "1234567", admin: false)
 
-Category.create(category: "Books")
-Category.create(category: "Movies")
-Category.create(category: "Music")
-Category.create(category: "TV")
-Category.create(category: "Food")
-Category.create(category: "Fashion")
+Category.create(category: "Books", picture: "https://i.imgur.com/Evmeocz.png")
+Category.create(category: "Movies", picture: "https://i.imgur.com/c1szvu3.png")
+Category.create(category: "Music", picture: "https://i.imgur.com/GUqF3Gj.png")
+Category.create(category: "TV", picture: "https://i.imgur.com/qsEr3yk.png")
+Category.create(category: "Food", picture: "https://i.imgur.com/katk6xy.png")
+Category.create(category: "Fashion", picture: "https://i.imgur.com/kCyDM6g.png")
 
 Topic.create(title: "What's everyone's favorite book? :)", user_id: 1, category_id: 1)
 Topic.create(title: "What's the worst book you ever read?", user_id: 2, category_id: 1)

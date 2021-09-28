@@ -9,6 +9,6 @@ class TopicSerializer < ActiveModel::Serializer
     end
 
     def updated_date
-        object.updated_at.localtime.strftime("%b %e,  %l:%M %p")
+        object.posts.last.created_at.localtime.strftime("%b %e,  %l:%M %p")
     end
 end

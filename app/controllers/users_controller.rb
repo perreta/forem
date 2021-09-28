@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-    before_action :authorize, only: [:create, :index]
+    before_action :authorize, only: [:index]
 
     # GET /users
     def index
@@ -61,6 +61,6 @@ class UsersController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def user_params
-      params.permit(:name, :username, :email, :profile_picture, :bio, :password_digest)
+      params.permit(:name, :username, :email, :profile_picture, :bio, :password)
     end
 end

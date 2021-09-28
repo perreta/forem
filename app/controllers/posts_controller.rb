@@ -23,11 +23,11 @@ class PostsController < ApplicationController
     end
 
   # PATCH/PUT /posts/1
-  def update
-    post = find_post 
-    post.update!(post_params)
-    render json: post, status: :accepted
-  end
+    def update
+        post = Post.find_by(id: params[:id])
+        post.update!(post_params)
+        render json: @post, status: :accepted
+    end
 
   # DELETE /posts/1
     def destroy
@@ -39,11 +39,11 @@ class PostsController < ApplicationController
     private
         # Use callbacks to share common setup or constraints between actions.    
         def set_post
-            post = @current_user.posts.find(params[:id])
+            @post = Post.find_by(id: params[:id])
         end
 
         # Only allow a list of trusted parameters through.
         def post_params
-            params.permit(:content, :user_id, :topic_id)
+            params.require(:post).permit(:content, :user_id, :topic_id)
         end
 end

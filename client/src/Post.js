@@ -1,10 +1,12 @@
 import { useState } from "react";
-import defaultProfile from "./photos/icons8-name-64.png";
 import { Form, Button, TextArea, Header, Image } from "semantic-ui-react";
+import { Link } from "react-router-dom";
 
-function Post({ user, id, content, username, avatar, createdDate, updatedDate, createdAt, updatedAt, postArray, setPostArray}) {
-  const [isClicked, setIsClicked] = useState(false);
-  const [updatedText, setUpdatedText] = useState(content);
+
+function Post({ post, user, id, urlTopic, content, username, avatar, createdDate, updatedDate, createdAt, updatedAt, postArray, setPostArray, setOtherUserProfile}) {
+    
+    const [isClicked, setIsClicked] = useState(false);
+    const [updatedText, setUpdatedText] = useState(content);
 
   
     function handleRemove() {
@@ -12,7 +14,6 @@ function Post({ user, id, content, username, avatar, createdDate, updatedDate, c
             method: "DELETE",
         }).then((res) => res.json());
         const postsToDisplay = postArray.filter((post) => {
-            console.log(post.id, id);
             if (post.id === id) return false;
             else return true;
         });
@@ -27,18 +28,22 @@ function Post({ user, id, content, username, avatar, createdDate, updatedDate, c
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({
-                text: updatedText,
+                content: updatedText,
+                user_id: user.id,
+                topic_id: urlTopic.id
             }),
         })
         .then((res) => res.json())
-        .then((updatedPost) => handleUpdatePost(updatedPost));
-        setIsClicked(!isClicked);
+        .then((updatedPost) => handleUpdatePost(updatedPost))
+        setIsClicked(!isClicked)
     }
+
   
     function handleUpdatePost(updatedPost) {
         const updatedPostsArray = postArray.map((post) => {
-            return post.id === updatedPost.id ? updatedPost : post;
+            return post.id === updatedPost.id ? updatedPost : post
         });
+        console.log(updatedPostsArray)
         setPostArray(updatedPostsArray);
     }
 
@@ -48,6 +53,10 @@ function Post({ user, id, content, username, avatar, createdDate, updatedDate, c
 
     function handleInputChange(event) {
         setUpdatedText(event.target.value);
+    }
+
+    function handleSetOtherUser(){
+        setOtherUserProfile(post.user)
     }
 
     return (
@@ -60,17 +69,21 @@ function Post({ user, id, content, username, avatar, createdDate, updatedDate, c
                     border: "2px solid gray",
                 }}
             >
-                <Image
-                    src={avatar} 
-                    alt="user avatar"
-                    style={{ maxWidth: 250, marginLeft:"auto", marginRight:"auto" }}
-                />
-                <Header as="h3" style={{fontWeight:"lighter"}}>Username: {username}</Header>
-                    {updatedAt === createdAt ? (
-                        <Header style={{fontWeight:"lighter", fontSize: "12px" }}>Posted: {createdDate}</Header>
-                    ) : (
-                        <Header style={{fontWeight:"lighter", fontSize: "12px" }}>Updated: {updatedDate}</Header>
-                    )}
+                <Link to={`/profile/${username}`} onClick={handleSetOtherUser}>
+                    <Image
+                        src={avatar} 
+                        alt="user avatar"
+                        style={{ maxWidth: 75, marginLeft:"auto", marginRight:"auto" }}
+                    />
+                    <Header as="h3" style={{fontWeight:"lighter"}}>Username: {username}</Header>
+                </Link>
+
+                {updatedAt === createdAt ? (
+                    <Header style={{fontWeight:"lighter", fontSize: "12px" }}>Posted: {createdDate}</Header>
+                ) : (
+                    <Header style={{fontWeight:"lighter", fontSize: "12px" }}>Updated: {updatedDate}</Header>
+                )}
+
                 {!isClicked ? (
                     <p style={{fontWeight:"lighter", fontSize: "20px", marginLeft:"auto", marginRight:"auto",marginBottom:"0px",paddingLeft:"100px", paddingRight:"100px" }}>{content}</p>
                 ) : (
@@ -88,6 +101,7 @@ function Post({ user, id, content, username, avatar, createdDate, updatedDate, c
                         <Button>Update</Button>
                     </Form>
                 )}
+
                 {user.username === username ? (
                     <>
                         <Button
@@ -100,7 +114,9 @@ function Post({ user, id, content, username, avatar, createdDate, updatedDate, c
                             Delete
                         </Button>
                     </>
-                ) : null}
+                ) : (
+                    null
+                )}
             </div>
             <br />
         </>
