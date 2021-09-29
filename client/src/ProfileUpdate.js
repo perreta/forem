@@ -5,7 +5,9 @@ import { Form, Input, Button, TextArea } from "semantic-ui-react";
 
 function ProfileUpdate({ user, setUser, isClicked, setIsClicked }) {
     const [errors, setErrors] = useState([]);
+    const [name, setName] = useState(user.name);
     const [username, setUsername] = useState(user.username);
+    const [email, setEmail] = useState(user.email);
     const [password, setPassword] = useState(user.password);
     const [profilePicture, setProfilePicture] = useState(user.profile_picture);
     const [bio, setBio] = useState(user.bio);
@@ -20,7 +22,10 @@ function ProfileUpdate({ user, setUser, isClicked, setIsClicked }) {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({
+                name: name,
                 username: username,
+                password: password,
+                email: email,
                 password: password,
                 profile_picture: profilePicture,
                 bio: bio,
@@ -32,23 +37,52 @@ function ProfileUpdate({ user, setUser, isClicked, setIsClicked }) {
                 setErrors(user.errors);
             } else {
                 setUser(user);
-                history.push("/profile");
+                setIsClicked((prevIsClicked)=>!prevIsClicked)
+                console.log(user, "bye")
+                history.push(`/profile/${user.username}`);
             }
         });
     }
+    
+    function handlePassword(e){
+        setPassword(e.target.value)
+        console.log(password)
+    }
+
+    console.log("hi", user)
+    // console.log(user.password)
+    
+    const error = errors.map(error => {
+        return error
+    }).join(", ")
 
     return (
         <div
             style={{
                 marginLeft:"auto",
                 marginRight:"auto" ,
-                paddingLeft:"150px",
-                paddingRight:"150px",
+                paddingLeft:"10px",
+                paddingRight:"10px",
                 paddingBottom: "100px",
                 disply: "flex",
             }}
         >
+        
+                <div style={{fontColor:"red"}}>
+                    <h3>
+                        {error}
+                    </h3>
+        
+                </div>
+            
             <Form onSubmit={onSubmit}>
+                <Form.Field
+                    label="Name"
+                    value={name}
+                    control={Input}
+                    onChange={(e) => setName(e.target.value)}
+                />
+
                 <Form.Field
                     label="Username"
                     value={username}
@@ -57,11 +91,18 @@ function ProfileUpdate({ user, setUser, isClicked, setIsClicked }) {
                 />
 
                 <Form.Field
+                    label="Email"
+                    value={email}
+                    control={Input}
+                    onChange={(e) => setEmail(e.target.value)}
+                />
+
+                <Form.Field
                     label="Password"
                     value={password}
                     type="password"
                     control={Input}
-                    onChange={(e) => setPassword(e.target.value)}
+                    onChange={handlePassword}
                 />
 
                 <Form.Field
@@ -81,9 +122,6 @@ function ProfileUpdate({ user, setUser, isClicked, setIsClicked }) {
                 />
 
                 <Button>Update</Button>
-                {errors.map((error) => (
-                <div>{error}</div>
-            ))}
         </Form>
         </div>
     );

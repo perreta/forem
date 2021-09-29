@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-    before_action :authorize, only: [:index]
+    skip_before_action :authorize, only: [:index, :create]
 
     # GET /users
     def index
@@ -20,30 +20,22 @@ class UsersController < ApplicationController
     # POST /users (SIGNUP)
     def create
         # Remove :profile_picture if it's empty
-        parameters = user_params.to_h
-        if parameters[:profile_picture].blank? then 
-            parameters.delete(:profile_picture)
-        end
-        if parameters[:bio].blank? then 
-            parameters.delete(:bio)
-        end
+        # parameters = user_params.to_h
+        # if parameters[:profile_picture].blank? then 
+        #     parameters.delete(:profile_picture)
+        # end
+        # if parameters[:bio].blank? then 
+        #     parameters.delete(:bio)
+        # end
 
-        user = User.create!(parameters)
+        user = User.create!(user_params)
         session[:user_id] = user.id
         render json: user, status: :created  
     end
 
     # PATCH/PUT /users/1
     def update
-        parameters = user_params.to_h
-        if parameters[:profile_picture].blank? then 
-            parameters[:profile_picture] = User.column_defaults["profile_picture"]
-        end
-        if parameters[:bio].blank? then 
-            parameters.delete(:bio)
-        end
-
-        @current_user.update!(parameters)
+        @current_user.update!(user_params)
         render json: @current_user, status: :accepted
     end
 
@@ -61,6 +53,6 @@ class UsersController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def user_params
-      params.permit(:name, :username, :email, :profile_picture, :bio, :password)
+      params.require(:user).permit(:name, :username, :email, :profile_picture, :bio, :password)
     end
 end

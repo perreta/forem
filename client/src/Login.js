@@ -14,8 +14,9 @@ function Login({onLogin}) {
     function loginOnChange(e) {
         const name = e.target.name;
         const value = e.target.value;
+        // console.log(`${e.target.name}:${e.target.value}`);
         setUser({
-            ...user,
+            ...user, 
             [name]: value,
         });
     }

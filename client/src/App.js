@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import TitleHeader from "./TitleHeader";
 import Homepage from "./Homepage";
+import Main from "./Main";
+import NavBar from "./NavBar";
 
 // COMMANDS THAT NEED TO RUN
   // npm install --prefix client
@@ -24,8 +26,8 @@ function App() {
 
   return (
     <>
-      <TitleHeader user={user} />
-      <Homepage user={user} setUser={setUser} />
+        <TitleHeader user={user} />
+        <Homepage user={user} setUser={setUser} />
     </>
   );
 }

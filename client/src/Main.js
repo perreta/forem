@@ -2,6 +2,7 @@ import PostContainer from "./PostContainer";
 import CategoryContainer from "./CategoryContainer"
 import Profile from "./Profile";
 import Home from "./Home"
+import NotFound from "./NotFound"
 import TopicContainer from "./TopicContainer"
 import Search from "./Search"
 import { Form,TextArea, Button } from "semantic-ui-react";
@@ -34,7 +35,7 @@ function Main({ user, setUser }) {
         return (
             <Category
                 category={category}
-                subcategory={category.category.to_lower_case}
+                subcategory={category.category.toLowerCase()}
                 user={user}
                 key={category.id}
                 id={category.id}
@@ -46,6 +47,7 @@ function Main({ user, setUser }) {
                 setCategoryArray={setCategoryArray}
                 setURLCategory={setURLCategory}
                 setFunctionalCategory={setFunctionalCategory}
+                enableAdmin={enableAdmin}
             />
             
         );
@@ -72,17 +74,17 @@ function Main({ user, setUser }) {
 
                 <Route exact path="/categories">
                     <h1>Categories:</h1>
-                    <CategoryContainer user={user} category={category} categoryArray={categoryArray} setCategoryArray={setCategoryArray}/>
+                    <CategoryContainer user={user} category={category} categoryArray={categoryArray} setCategoryArray={setCategoryArray} enableAdmin={enableAdmin}/>
                 </Route>
 
                 <Route exact path={`/categories/${urlCategory}`}>
                     <h1>{capitalizeFirstLetter(urlCategory)}</h1>
-                    <TopicContainer functionalCategory={functionalCategory} user={user} urlCategory={urlCategory} setURLTopic={setURLTopic} />
+                    <TopicContainer functionalCategory={functionalCategory} user={user} urlCategory={urlCategory} setURLTopic={setURLTopic} enableAdmin={enableAdmin}/>
                 </Route>
 
                 <Route exact path={`/categories/${urlCategory}/${urlTopic.id}`}>
                     <h1>{urlTopic.title}</h1>
-                    <PostContainer user={user} category={urlCategory} urlTopic={urlTopic} setOtherUserProfile={setOtherUserProfile}/>
+                    <PostContainer user={user} category={urlCategory} urlTopic={urlTopic} setOtherUserProfile={setOtherUserProfile} enableAdmin={enableAdmin}/>
                 </Route>
 
                 <Route exact path={`/profile/${user.username}`}>
@@ -90,11 +92,15 @@ function Main({ user, setUser }) {
                 </Route>
 
                 <Route exact path={`/profile/${otherUserProfile.username}`}>
-                    <Profile user={otherUserProfile} setUser={setUser} setEnableAdmin={setEnableAdmin}/>
+                    <Profile user={otherUserProfile} setUser={setUser} enableAdmin={enableAdmin} setEnableAdmin={setEnableAdmin}/>
                 </Route>
 
                 <Route exact path="/search">
                     <Search user={user} setURLTopic={setURLTopic} urlCategory={urlCategory}/>
+                </Route>
+
+                <Route exact path="/*">
+                    <NotFound />
                 </Route>
             </Switch>
         </div>

@@ -1,6 +1,6 @@
 class PostsController < ApplicationController
     before_action :set_post, only: [:show, :update, :destroy]
-    skip_before_action :authorize, only: :index
+    skip_before_action :authorize, only: [:index, :show] 
 
     # GET /posts
     def index
@@ -14,15 +14,13 @@ class PostsController < ApplicationController
         render json: post, status: :ok  
     end
 
-  
-
     # POST /posts
     def create
         post = @current_user.posts.create!(post_params)
         render json: post, status: :created
     end
 
-  # PATCH/PUT /posts/1
+    # PATCH/PUT /posts/1
     def update
         post = Post.find_by(id: params[:id])
         post.update!(post_params)

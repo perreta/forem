@@ -9,6 +9,7 @@ function Homepage ({ user, setUser }) {
     if (!user)
         return (
             <div>
+
                 <Switch>
                     <Route exact path="/login">
                         <Login onLogin={setUser} />
@@ -17,6 +18,7 @@ function Homepage ({ user, setUser }) {
                     <Route exact path="/signup">
                         <Signup onLogin={setUser} />
                     </Route>
+
                 </Switch>
             </div>
         )

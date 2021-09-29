@@ -5,7 +5,7 @@ import { useHistory } from "react-router-dom";
 
 
 
-function Profile({ user, setUser, setEnableAdmin }) {
+function Profile({ user, setUser, enableAdmin, setEnableAdmin }) {
     
     const [ isClicked, setIsClicked ] = useState(false)
     const history = useHistory();
@@ -18,19 +18,16 @@ function Profile({ user, setUser, setEnableAdmin }) {
         setEnableAdmin((prevEnableAdmin) => !prevEnableAdmin)
     }
 
-    console.log(user)
     const categories = user.categories.map(category => {
         return category.category
     }).join(", ");
 
-    function handleLogout() {
-        fetch("/logout", {
-            method: "DELETE",
-        })
-        .then((r) => {
-            setUser(null);
-            history.push("/");
-        });
+    
+    console.log("hi")
+    console.log(user)
+    console.log("hi")
+    function handleUserDelete() {
+
     }
 
     return (
@@ -67,18 +64,27 @@ function Profile({ user, setUser, setEnableAdmin }) {
             
                     </Container>
 
+                    <div className={ true ? "edit" : "hidden"}>
+                        <button
+                            onClick={handleEditClick}
+                            className={!isClicked ? "edit" : "cancel"}
+                        >
+                            {isClicked ? "Cancel" : "Edit"}
+                        </button>
+                        
+                        {/* <button
+                            onClick={handleLogout}
+                            className={!isClicked ? "cancel" : "edit"}
+                        >
+                            Logout                    
+                        </button> */}
+                    </div>
+
                     <button
-                        onClick={handleEditClick}
-                        className={!isClicked ? "cancel" : "edit"}
+                        onClick={handleUserDelete}
+                        className={enableAdmin ? "delete-user" : "hidden"}
                     >
-                        {isClicked ? "Cancel" : "Edit"}
-                    </button>
-                    
-                    <button
-                        onClick={handleLogout}
-                        className={!isClicked ? "cancel" : "edit"}
-                    >
-                        Logout                    
+                        Delete User                    
                     </button>
 
                     <div className={!isClicked ? "hidden" : "edit-window"}>

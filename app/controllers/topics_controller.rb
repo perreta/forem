@@ -1,6 +1,6 @@
 class TopicsController < ApplicationController
     before_action :set_topic, only: [:show, :update, :destroy]
-    skip_before_action :authorize, only: [:index, :show]
+    skip_before_action :authorize, only: [:index, :show] 
 
     # GET /topics
     def index

@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import Post from "./Post.js";
 import PostForm from "./PostForm";
 
-function PostContainer({ user, urlTopic, setOtherUserProfile}) {
+function PostContainer({ user, urlTopic, setOtherUserProfile, enableAdmin}) {
     
     const [postArray, setPostArray] = useState([]);
     
@@ -32,6 +32,7 @@ function PostContainer({ user, urlTopic, setOtherUserProfile}) {
                 setPostArray={setPostArray}
                 urlTopic={urlTopic}
                 setOtherUserProfile={setOtherUserProfile}
+                enableAdmin={enableAdmin}
             />
         );
     });

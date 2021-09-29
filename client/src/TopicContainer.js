@@ -4,7 +4,7 @@ import { Form,TextArea, Button } from "semantic-ui-react";
 
 import Topic from "./Topic.js";
 
-function TopicContainer({ user, urlCategory, setURLTopic, functionalCategory}) {
+function TopicContainer({ user, urlCategory, setURLTopic, functionalCategory, enableAdmin}) {
     
     const [topicArray, setTopicArray] = useState([])
     const [newTopicContent, setNewTopicContent] = useState(false)
@@ -65,6 +65,7 @@ function TopicContainer({ user, urlCategory, setURLTopic, functionalCategory}) {
                 setTopicArray={setTopicArray}
                 setURLTopic={setURLTopic}
                 urlCategory={urlCategory}
+                enableAdmin={enableAdmin}
             />
         );
     });

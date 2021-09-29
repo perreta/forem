@@ -48,12 +48,7 @@ function TitleHeader({ user }) {
                         paddingLeft: "300px",
                         paddingTop: "50px",
                     }}
-                >
-                    <Header as="h2">
-                        Welcome to For'em
-                    </Header>
-                    
-
+                >   
                     <div style={{ textAlign: "center", fontSize: "16px" }}>
                         <Link to="/login">Login &ensp;</Link>
                         <Link to="/signup">&ensp;Signup</Link>

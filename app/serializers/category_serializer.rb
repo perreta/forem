@@ -1,5 +1,5 @@
 class CategorySerializer < ActiveModel::Serializer
-    attributes :id, :category, :picture, :created_at, :updated_at, :created_date, :updated_date
+    attributes :id, :category, :picture, :created_at, :updated_at, :created_date, :updated_date, :topics, :posts
     has_many :topics
     has_many :posts, through: :topics
 
